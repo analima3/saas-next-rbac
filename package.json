@@ -1,29 +1,25 @@
 {
   "name": "next-saas-rbac",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
-    "prettier": "^3.7.4",
-    "turbo": "^2.10.5",
-    "typescript": "5.9.2"
+    "@eslint/compat": "^2.1.0",
+    "eslint-plugin-prettier": "^5.5.6",
+    "turbo": "^2.10.5"
   },
   "engines": {
     "node": ">=18"
   },
   "devEngines": {
     "packageManager": {
-      "name": "npm",
-      "version": "11.13.0"
+      "name": "pnpm",
+      "version": "11.15.1"
     }
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  }
 }
