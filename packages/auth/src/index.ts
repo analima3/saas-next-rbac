@@ -6,6 +6,10 @@ import {
 import type { User } from './models/user'
 import { permissions, type AppAbility } from './permissions'
 
+export * from './models/organization'
+export * from './models/project'
+export * from './models/user'
+
 export const createMongoAppAbility =
   createMongoAbility as CreateAbility<AppAbility>
 
