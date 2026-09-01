@@ -1,3 +1,6 @@
-type Actions = 'manage' | 'create' | 'update' | 'delete' | 'transfer_ownership'
+import type { Organization } from '../models/organization'
 
-export type OrganizationSubject = [Actions, 'Organization']
+type Actions = 'manage' | 'create' | 'update' | 'delete' | 'transfer_ownership'
+type Subject = 'Organization' | Organization
+
+export type OrganizationSubject = [Actions, Subject]

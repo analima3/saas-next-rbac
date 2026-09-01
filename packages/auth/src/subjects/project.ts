@@ -1,3 +1,6 @@
-type Actions = 'manage' | 'get' | 'create' | 'update' | 'delete'
+import type { Project } from '../models/project'
 
-export type ProjectSubject = [Actions, 'Project']
+type Actions = 'manage' | 'get' | 'create' | 'update' | 'delete'
+type Subject = 'Project' | Project
+
+export type ProjectSubject = [Actions, Subject]
