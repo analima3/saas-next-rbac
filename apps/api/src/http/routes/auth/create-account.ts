@@ -4,18 +4,21 @@ import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 
-const bodyCreateAccount = {
-  body: z.object({
-    name: z.string(),
-    email: z.email(),
-    password: z.string().min(6),
-  }),
-}
-
 export async function createAccount(app: FastifyInstance) {
-  app
-    .withTypeProvider<ZodTypeProvider>()
-    .post('/users', { schema: bodyCreateAccount }, async (request, reply) => {
+  app.withTypeProvider<ZodTypeProvider>().post(
+    '/users',
+    {
+      schema: {
+        tags: ['User'],
+        summary: 'Create a new user account',
+        body: z.object({
+          name: z.string(),
+          email: z.email(),
+          password: z.string().min(6),
+        }),
+      },
+    },
+    async (request, reply) => {
       const { name, email, password } = request.body
 
       const userWithSameEmail = await prisma.user.findUnique({
@@ -26,16 +29,33 @@ export async function createAccount(app: FastifyInstance) {
         return reply.status(400).send({ message: 'User already exists' })
       }
 
+      const [, domain] = email.split('@')
+
+      const autoJoinOrganization = await prisma.organization.findFirst({
+        where: {
+          domain,
+          shouldAttachUsersByDomain: true,
+        },
+      })
+
       const passwordHash = await bcrypt.hash(password, 6)
 
-      const user = await prisma.user.create({
+      await prisma.user.create({
         data: {
           name,
           email,
           passwordHash,
+          member_on: autoJoinOrganization
+            ? {
+                create: {
+                  organizationId: autoJoinOrganization.id,
+                },
+              }
+            : undefined,
         },
       })
 
       return reply.status(201).send({ message: 'User created successfully' })
-    })
+    }
+  )
 }
