@@ -7,7 +7,7 @@ import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function createAccount(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    '/users',
+    '/auth/create-account',
     {
       schema: {
         tags: ['Auth'],

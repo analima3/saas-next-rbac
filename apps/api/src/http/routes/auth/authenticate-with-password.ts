@@ -7,7 +7,7 @@ import { UnauthorizedError } from '../_errors/unauthorized-error'
 
 export async function authenticateWithPassword(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    '/sessions/password',
+    '/auth',
     {
       schema: {
         tags: ['Auth'],
