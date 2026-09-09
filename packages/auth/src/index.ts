@@ -10,6 +10,9 @@ export * from './models/organization'
 export * from './models/project'
 export * from './models/user'
 
+export { toInternalOrganization } from './helpers/toInternalOrganization'
+export { toInternalProject } from './helpers/toInternalProject'
+
 export const createMongoAppAbility =
   createMongoAbility as CreateAbility<AppAbility>
 
@@ -27,6 +30,9 @@ export function defineAbilityFor(user: User): AppAbility {
       return subject.__typename
     },
   })
+
+  ability.can = ability.can.bind(ability)
+  ability.cannot = ability.cannot.bind(ability)
 
   return ability
 }

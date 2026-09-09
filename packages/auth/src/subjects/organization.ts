@@ -1,6 +1,6 @@
-import type { Organization } from '../models/organization'
+import type { InternalOrganization } from '../models/organization'
 
 type Actions = 'manage' | 'update' | 'delete' | 'transfer_ownership'
-type Subject = 'Organization' | Organization
+type Subject = 'Organization' | InternalOrganization
 
 export type OrganizationSubject = [Actions, Subject]
