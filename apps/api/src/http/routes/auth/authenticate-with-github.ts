@@ -1,10 +1,9 @@
 import { prisma } from '@/lib/prisma'
-import { compare } from 'bcryptjs'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { UnauthorizedError } from '../_errors/unauthorized-error'
 import { BadRequestError } from '../_errors/bad-request-error'
+import { env } from '@acl/env'
 
 export async function authenticateWithGithub(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -17,31 +16,27 @@ export async function authenticateWithGithub(app: FastifyInstance) {
           code: z.string(),
         }),
         response: {
-          // 401: z.object({
-          //   message: z.string(),
-          // }),
-          // 200: z.object({
-          //   token: z.string(),
-          // }),
+          200: z.object({
+            token: z.string(),
+          }),
         },
       },
     },
     async (request, reply) => {
       const { code } = request.body
 
-      const githubOAuthURL = new URL(process.env.GITHUB_ACCESS_TOKEN_URL!)
-
-      githubOAuthURL.searchParams.set(
-        'client_id',
-        process.env.GITHUB_CLIENT_ID!
+      const githubOAuthURL = new URL(
+        'https://github.com/login/oauth/access_token'
       )
+
+      githubOAuthURL.searchParams.set('client_id', env.GITHUB_OAUTH_CLIENT_ID)
       githubOAuthURL.searchParams.set(
         'client_secret',
-        process.env.GITHUB_CLIENT_SECRET!
+        env.GITHUB_OAUTH_CLIENT_SECRET
       )
       githubOAuthURL.searchParams.set(
         'redirect_uri',
-        process.env.GITHUB_REDIRECT_URI!
+        env.GITHUB_OAUTH_CLIENT_REDIRECT_URI!
       )
       githubOAuthURL.searchParams.set('code', code)
 
@@ -62,7 +57,7 @@ export async function authenticateWithGithub(app: FastifyInstance) {
         })
         .parse(githubAccessTokenData)
 
-      const githubUserResponse = await fetch(process.env.GITHUB_GET_USER_URI!, {
+      const githubUserResponse = await fetch('https://api.github.com/user', {
         headers: {
           Authorization: `Bearer ${githubAccessToken}`,
         },

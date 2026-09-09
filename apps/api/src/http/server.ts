@@ -16,6 +16,7 @@ import { errorHandler } from './error-handler'
 import { requestPasswordRecover } from './routes/auth/request-password-recover'
 import { resetPassword } from './routes/auth/reset-password'
 import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
+import { env } from '@acl/env'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -32,13 +33,21 @@ app.register(fastifySwagger, {
         'Full-stack saas boilerplate built with Next.js, Fastify, Prisma, and Zod',
       version: '1.0.0',
     },
-    servers: [],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
   },
   transform: jsonSchemaTransform,
 })
 
 app.register(fastifyJwt, {
-  secret: process.env.JWT_SECRET || 'supersecret',
+  secret: env.JWT_SECRET || 'supersecret',
 })
 app.register(fastifySwaggerUi, {
   routePrefix: '/docs',
@@ -53,6 +62,6 @@ app.register(getProfile)
 app.register(requestPasswordRecover)
 app.register(resetPassword)
 
-app.listen({ port: 3333 }).then(() => {
+app.listen({ port: env.SERVER_PORT }).then(() => {
   console.log('HTTP server up')
 })
