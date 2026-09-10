@@ -116,6 +116,9 @@ app.register(rejectInvite)
 app.register(revokeInvite)
 app.register(getPendingInvites)
 
+// billing
+app.register(getOrganization)
+
 app.listen({ port: env.SERVER_PORT }).then(() => {
   console.log('HTTP server up')
 })
