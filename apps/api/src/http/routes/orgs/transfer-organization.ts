@@ -39,7 +39,7 @@ export async function transferOrganization(app: FastifyInstance) {
 
         const authOrganization = toInternalOrganization({
           id: organization.id,
-          ownerId: organization.ownerId,
+          ownerId: userId,
         })
 
         const { cannot } = getUserPermission(userId, membership.role)
