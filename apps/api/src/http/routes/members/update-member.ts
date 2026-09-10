@@ -6,21 +6,25 @@ import { z } from 'zod'
 import { getUserPermission } from '@/utils/get-user-permissions'
 import { UnauthorizedError } from '../_errors/unauthorized-error'
 import { toInternalProject } from '@acl/auth'
+import { Role } from '@prisma/client'
 
-export async function deleteProject(app: FastifyInstance) {
+export async function updateMember(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
-    .delete(
-      '/organizations/:slug/projects/:projectId',
+    .put(
+      '/organizations/:slug/members/:memberId',
       {
         schema: {
-          tags: ['Project'],
-          summary: 'Delete a project from a organization.',
+          tags: ['Members'],
+          summary: 'Update a member from a organization.',
           security: [{ bearerAuth: [] }],
+          body: z.object({
+            role: z.nativeEnum(Role),
+          }),
           params: z.object({
             slug: z.string(),
-            projectId: z.string().uuid(),
+            memberId: z.string().uuid(),
           }),
           response: {
             204: z.undefined(),
@@ -28,27 +32,29 @@ export async function deleteProject(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
-        const { slug, projectId } = request.params
+        const { slug, memberId } = request.params
 
         const userId = await request.getCurrentUserId()
-        const { membership } = await request.getUserMembership(slug)
-
-        const authProject = toInternalProject({
-          id: projectId,
-          ownerId: userId,
-        })
+        const { membership, organization } =
+          await request.getUserMembership(slug)
 
         const { cannot } = getUserPermission(userId, membership.role)
 
-        if (cannot('delete', authProject)) {
+        if (cannot('update', 'User')) {
           throw new UnauthorizedError(
-            'You are not allowed to delete this projects.'
+            'You are not allowed to update this member.'
           )
         }
 
-        await prisma.project.delete({
+        const { role } = request.body
+
+        await prisma.member.update({
           where: {
-            id: projectId,
+            id: memberId,
+            organizationId: organization.id,
+          },
+          data: {
+            role,
           },
         })
 

@@ -23,7 +23,7 @@ export async function getOrganizations(app: FastifyInstance) {
                   id: z.string().uuid(),
                   name: z.string(),
                   slug: z.string(),
-                  avatarUrl: z.string().nullable(),
+                  avatarUrl: z.string().url().nullable(),
                   role: z.nativeEnum(Role),
                 })
                 .array(),
