@@ -4,6 +4,7 @@ import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { UnauthorizedError } from '../_errors/unauthorized-error'
+import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function authenticateWithPassword(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -37,8 +38,10 @@ export async function authenticateWithPassword(app: FastifyInstance) {
         throw new UnauthorizedError('Invalid credentials')
       }
 
-      if (!userFromEmail.passwordHash) {
-        throw new UnauthorizedError('Invalid credentials')
+      if (userFromEmail.passwordHash === null) {
+        throw new BadRequestError(
+          'User does not have a password, use social login.'
+        )
       }
 
       const isPasswordValid = await compare(
