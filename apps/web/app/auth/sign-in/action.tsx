@@ -1,6 +1,6 @@
 'use server'
 
-import { signInWithPassword } from '@/http/sign-in-with-password'
+import { signInWithPassword } from '@/dal/sign-in-with-password'
 import { HTTPError } from 'ky'
 import { cookies } from 'next/headers'
 import { z } from 'zod'
@@ -27,9 +27,9 @@ export async function signInWithEmailAndPassword(data: FormData) {
       password,
     })
 
-    const cookiesStore = await cookies()
+    const cookieStore = await cookies()
 
-    cookiesStore.set('token', token, {
+    cookieStore.set('token', token, {
       maxAge: 60 * 60 * 24 * 7, // 7 days
     })
   } catch (error) {

@@ -1,3 +1,5 @@
+import 'server-only'
+
 import { api } from './api-client'
 
 interface SignInWithPasswordRequest {
