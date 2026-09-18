@@ -38,7 +38,7 @@ export async function authenticateWithPassword(app: FastifyInstance) {
         throw new UnauthorizedError('Invalid credentials')
       }
 
-      if (userFromEmail.passwordHash === null) {
+      if (!userFromEmail.passwordHash) {
         throw new BadRequestError(
           'User does not have a password, use social login.'
         )
