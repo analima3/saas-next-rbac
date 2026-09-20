@@ -9,6 +9,7 @@ import { permissions, type AppAbility } from './permissions'
 export * from './models/organization'
 export * from './models/project'
 export * from './models/user'
+export * from './roles'
 
 export { toInternalOrganization } from './helpers/toInternalOrganization'
 export { toInternalProject } from './helpers/toInternalProject'
