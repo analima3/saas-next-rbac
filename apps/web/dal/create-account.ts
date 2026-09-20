@@ -8,7 +8,7 @@ interface SignUpRequest {
   password: string
 }
 
-export async function signUp(data: SignUpRequest) {
+export async function createAccount(data: SignUpRequest) {
   const response = await api.post('/auth/create-account', {
     json: data,
   })

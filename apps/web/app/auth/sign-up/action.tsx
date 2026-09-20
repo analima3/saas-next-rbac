@@ -2,7 +2,7 @@
 
 import { HTTPError } from 'ky'
 import { z } from 'zod'
-import { signUp as signUpDal } from '@/dal/sign-up'
+import { createAccount } from '@/dal/create-account'
 
 const signUpSchema = z
   .object({
@@ -33,7 +33,7 @@ export async function signUp(data: FormData) {
   try {
     const { name, email, password } = signUp.data
 
-    await signUpDal({
+    await createAccount({
       name,
       email,
       password,
