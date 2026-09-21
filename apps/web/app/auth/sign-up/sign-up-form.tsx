@@ -28,7 +28,6 @@ export function SignUpForm() {
 
   return (
     <div className="space-y-4">
-      <pre>{JSON.stringify(errors)}</pre>
       <form onSubmit={handleSubmit} className="space-y-4">
         {success === false && message && (
           <Alert variant="destructive">
