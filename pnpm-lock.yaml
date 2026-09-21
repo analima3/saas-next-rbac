@@ -298,6 +298,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@acl/auth':
+        specifier: workspace:*
+        version: link:../../packages/auth
       '@base-ui/react':
         specifier: ^1.8.0
         version: 1.8.0(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)

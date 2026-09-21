@@ -19,9 +19,19 @@ export default async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL('/', request.url))
   }
 
-  return NextResponse.next()
+  const response = NextResponse.next()
+
+  if (pathname.includes('/org')) {
+    const [, , slug] = pathname.split('/')
+
+    response.cookies.set('org', slug)
+  } else {
+    response.cookies.delete('org')
+  }
+
+  return response
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|\\.well-known).*)'],
 }
