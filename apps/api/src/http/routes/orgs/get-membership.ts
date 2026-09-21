@@ -1,5 +1,5 @@
 import { auth } from '@/http/middlewares/auth'
-import { Role } from '@prisma/client'
+import { Role } from '@acl/auth'
 import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'

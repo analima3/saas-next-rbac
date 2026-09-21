@@ -3,8 +3,8 @@ import { prisma } from '@/lib/prisma'
 import { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
+import { Role } from '@acl/auth'
 import { BadRequestError } from '../_errors/bad-request-error'
-import { Role } from '@prisma/client'
 
 export async function getPendingInvites(app: FastifyInstance) {
   app
@@ -47,6 +47,16 @@ export async function getPendingInvites(app: FastifyInstance) {
       async (request) => {
         const userId = await request.getCurrentUserId()
 
+        const user = await prisma.user.findUnique({
+          where: {
+            id: userId,
+          },
+        })
+
+        if (!user) {
+          throw new BadRequestError('User not found.')
+        }
+
         const invites = await prisma.invite.findMany({
           select: {
             id: true,
@@ -67,7 +77,7 @@ export async function getPendingInvites(app: FastifyInstance) {
             },
           },
           where: {
-            userId,
+            email: user.email,
           },
         })
 

@@ -5,8 +5,7 @@ import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { getUserPermission } from '@/utils/get-user-permissions'
 import { UnauthorizedError } from '../_errors/unauthorized-error'
-import { toInternalProject } from '@acl/auth'
-import { Role } from '@prisma/client'
+import { Role } from '@acl/auth'
 
 export async function updateMember(app: FastifyInstance) {
   app

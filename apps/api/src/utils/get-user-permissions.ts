@@ -1,5 +1,5 @@
 import { defineAbilityFor, User } from '@acl/auth'
-import { Role } from '@prisma/client'
+import { Role } from '@acl/auth'
 
 export function getUserPermission(userId: string, role: Role) {
   const authUser: User = {

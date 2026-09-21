@@ -5,7 +5,6 @@ import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { getUserPermission } from '@/utils/get-user-permissions'
 import { UnauthorizedError } from '../_errors/unauthorized-error'
-import { Role } from '@prisma/client'
 import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function revokeInvite(app: FastifyInstance) {
