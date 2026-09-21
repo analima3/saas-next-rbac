@@ -2,10 +2,10 @@ import { Header } from '@/components/header'
 
 export default function Projects() {
   return (
-    <div>
+    <div className="py-4">
       <Header />
 
-      <div>projects from the org selected</div>
+      <main></main>
     </div>
   )
 }
