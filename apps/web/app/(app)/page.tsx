@@ -1,3 +1,3 @@
 export default async function Home() {
-  return <p>home</p>
+  return <p className="text-muted-foreground text-sm">Select a organization</p>
 }
