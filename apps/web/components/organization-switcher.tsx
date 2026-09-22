@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { getOrganizations } from '@/dal/get-organizations'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
+import { SwitchOrgButton } from './switch-org-button'
 
 export async function OrganizationSwitcher() {
   const cookieStore = await cookies()
@@ -52,13 +53,13 @@ export async function OrganizationSwitcher() {
                 key={org.id}
                 nativeButton={false}
                 render={
-                  <Link href={`/org/${org.slug}`}>
+                  <SwitchOrgButton orgSlug={org.slug}>
                     <Avatar className="mr-1 size-4">
                       {org.avatarUrl && <AvatarImage src={org.avatarUrl} />}
                       <AvatarFallback />
                     </Avatar>
                     <span className="truncate">{org.name}</span>
-                  </Link>
+                  </SwitchOrgButton>
                 }
               ></DropdownMenuItem>
             )

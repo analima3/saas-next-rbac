@@ -1,7 +1,13 @@
-export default function Projects() {
+export default async function Projects({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}) {
+  const { slug } = await params
+
   return (
     <div>
-      <p>projects</p>
+      <p>projects {slug}</p>
     </div>
   )
 }
