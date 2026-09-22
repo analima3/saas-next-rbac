@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import Link from 'next/link'
 
 export default function ForgotPasswordPage() {
   return (
@@ -19,7 +20,7 @@ export default function ForgotPasswordPage() {
         variant="link"
         nativeButton={false}
         size="sm"
-        render={<a href="/auth/sign-in">Sign in instead</a>}
+        render={<Link href="/auth/sign-in">Sign in instead</Link>}
       ></Button>
     </form>
   )

@@ -84,7 +84,7 @@ export function SignInWithPasswordForm() {
           variant="link"
           nativeButton={false}
           size="sm"
-          render={<a href="/auth/sign-up">Create new account</a>}
+          render={<Link href="/auth/sign-up">Create new account</Link>}
         ></Button>
       </form>
 

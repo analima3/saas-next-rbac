@@ -13,6 +13,7 @@ import { useFormState } from '@/hooks/use-form-state'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { AlertTriangle, Loader2 } from 'lucide-react'
 import { signInWithGithub } from '../actions'
+import Link from 'next/link'
 
 export function SignUpForm() {
   const router = useRouter()
@@ -100,7 +101,7 @@ export function SignUpForm() {
           variant="link"
           nativeButton={false}
           size="sm"
-          render={<a href="/auth/sign-in">Already registered? Sign in</a>}
+          render={<Link href="/auth/sign-in">Already registered? Sign in</Link>}
         ></Button>
       </form>
 

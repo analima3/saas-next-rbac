@@ -11,6 +11,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { getOrganizations } from '@/dal/get-organizations'
 import { cookies } from 'next/headers'
+import Link from 'next/link'
 
 export async function OrganizationSwitcher() {
   const cookieStore = await cookies()
@@ -51,13 +52,13 @@ export async function OrganizationSwitcher() {
                 key={org.id}
                 nativeButton={false}
                 render={
-                  <a href={`/org/${org.slug}`}>
+                  <Link href={`/org/${org.slug}`}>
                     <Avatar className="mr-1 size-4">
                       {org.avatarUrl && <AvatarImage src={org.avatarUrl} />}
                       <AvatarFallback />
                     </Avatar>
                     <span className="truncate">{org.name}</span>
-                  </a>
+                  </Link>
                 }
               ></DropdownMenuItem>
             )
@@ -67,11 +68,10 @@ export async function OrganizationSwitcher() {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem
-          nativeButton={false}
           render={
-            <a href="/create-organization">
+            <Link href="/create-organization">
               <PlusCircle className="mr-1 size-4" /> <span>Create new</span>
-            </a>
+            </Link>
           }
         ></DropdownMenuItem>
       </DropdownMenuContent>

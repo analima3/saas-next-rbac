@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu'
 import { getUserProfile } from '@/dal/get-user-profile'
+import Link from 'next/link'
 
 function getUserInitials(name: string): string {
   const names = name.trim().split(/\s+/)
@@ -44,9 +45,9 @@ export async function ProfileButton() {
         <DropdownMenuItem
           nativeButton={false}
           render={
-            <a href="/api/auth/sign-out">
+            <Link href="/api/auth/sign-out">
               <LogOut className="mr-1 size-4" /> <span>Sign out</span>
-            </a>
+            </Link>
           }
         ></DropdownMenuItem>
       </DropdownMenuContent>
