@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { createSlug } from '@/utils/create-slug'
 import { getUserPermission } from '@/utils/get-user-permissions'
 import { UnauthorizedError } from '../_errors/unauthorized-error'
+import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function createProject(app: FastifyInstance) {
   app
@@ -48,11 +49,23 @@ export async function createProject(app: FastifyInstance) {
           )
         }
 
+        const projectSlug = createSlug(name)
+
+        const projectFounded = await prisma.project.findUnique({
+          where: {
+            slug: projectSlug,
+          },
+        })
+
+        if (projectFounded) {
+          throw new BadRequestError('Project already exists.')
+        }
+
         const project = await prisma.project.create({
           data: {
             name,
             description,
-            slug: createSlug(name),
+            slug,
             organizationId: organization.id,
             ownerId: userId,
           },
