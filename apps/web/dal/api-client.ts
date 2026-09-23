@@ -1,14 +1,21 @@
 import { env } from '@acl/env'
+import { CookiesFn, getCookie } from 'cookies-next'
 import ky from 'ky'
-import { cookies } from 'next/headers'
 
 export const api = ky.create({
   baseUrl: env.NEXT_PUBLIC_API_URL,
   hooks: {
     beforeRequest: [
       async ({ request }) => {
-        const cookieStore = await cookies()
-        const token = cookieStore.get('token')?.value
+        let cookieStore: CookiesFn | undefined
+
+        if (typeof window === 'undefined') {
+          const { cookies: serverCookies } = await import('next/headers')
+
+          cookieStore = serverCookies
+        }
+
+        const token = await getCookie('token', { cookies: cookieStore })
 
         if (token) {
           request.headers.set('Authorization', `Bearer ${token}`)

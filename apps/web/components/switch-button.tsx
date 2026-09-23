@@ -1,17 +1,19 @@
 'use client'
 
-import { switchOrganization } from '@/app/(app)/actions'
+import { redirectToPathAction } from '@/app/(app)/actions'
 import { Button } from './ui/button'
 
-export function SwitchOrgButton({
+export function SwitchButton({
   children,
   orgSlug,
+  projectSlug,
 }: {
   children: React.ReactNode
   orgSlug: string
+  projectSlug?: string
 }) {
   return (
-    <form action={() => switchOrganization(orgSlug)}>
+    <form action={() => redirectToPathAction(orgSlug, projectSlug)}>
       <Button
         type="submit"
         variant="ghost"
