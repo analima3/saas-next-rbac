@@ -1,13 +1,3 @@
-export default async function Projects({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
-
-  return (
-    <div>
-      <p>projects {slug}</p>
-    </div>
-  )
+export default async function Projects() {
+  return <p className="text-muted-foreground text-sm">Select a project</p>
 }

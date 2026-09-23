@@ -1,10 +1,9 @@
 import { getUserMembership } from '@/dal/get-user-membership'
+import { getCurrentOrganization } from '@/lib/get-current-organization'
 import { defineAbilityFor } from '@acl/auth'
-import { cookies } from 'next/headers'
 
 export async function ability() {
-  const cookieStore = await cookies()
-  const currentOrg = cookieStore.get('org')?.value
+  const currentOrg = await getCurrentOrganization()
 
   if (!currentOrg) {
     return null

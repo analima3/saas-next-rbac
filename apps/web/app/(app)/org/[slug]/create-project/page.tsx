@@ -1,4 +1,4 @@
-import { ability } from '@/ability/ability'
+import { ability } from '@/lib/ability'
 import ProjectForm from './project-form'
 import { redirect } from 'next/navigation'
 

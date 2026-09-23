@@ -1,8 +1,8 @@
 'use server'
 
 import { createProject } from '@/dal/create-project'
+import { getCurrentOrganization } from '@/lib/get-current-organization'
 import { HTTPError } from 'ky'
-import { cookies } from 'next/headers'
 import { z } from 'zod'
 
 const projectSchema = z.object({
@@ -13,8 +13,7 @@ const projectSchema = z.object({
 })
 
 export async function createProjectAction(data: FormData) {
-  const cookieStore = await cookies()
-  const orgSlug = cookieStore.get('org')?.value
+  const orgSlug = await getCurrentOrganization()
 
   const projectParse = projectSchema.safeParse(Object.fromEntries(data))
 

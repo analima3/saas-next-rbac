@@ -1,13 +1,7 @@
-export default async function Project({
-  params,
-}: {
-  params: Promise<{ project: string }>
-}) {
-  const { project } = await params
-
+export default async function Project() {
   return (
-    <div>
-      <p>project {project}</p>
+    <div className="space-y-4">
+      <h1 className="text-2xl font-bold">Project</h1>
     </div>
   )
 }

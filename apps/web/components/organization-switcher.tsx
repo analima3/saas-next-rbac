@@ -10,13 +10,12 @@ import {
 } from './ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { getOrganizations } from '@/dal/get-organizations'
-import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { SwitchButton } from './switch-button'
+import { getCurrentOrganization } from '@/lib/get-current-organization'
 
 export async function OrganizationSwitcher() {
-  const cookieStore = await cookies()
-  const orgSlug = cookieStore.get('org')?.value
+  const orgSlug = await getCurrentOrganization()
 
   const { organizations } = await getOrganizations()
   const currentOrganization = organizations.find((org) => org.slug === orgSlug)
