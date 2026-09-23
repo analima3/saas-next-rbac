@@ -19,7 +19,6 @@ export async function getProjects(app: FastifyInstance) {
           security: [{ bearerAuth: [] }],
           params: z.object({
             slug: z.string(),
-            projectSlug: z.string().uuid(),
           }),
           response: {
             200: z.object({
