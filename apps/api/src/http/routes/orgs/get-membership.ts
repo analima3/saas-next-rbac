@@ -24,6 +24,7 @@ export async function getMembership(app: FastifyInstance) {
                 id: z.string().uuid(),
                 role: z.nativeEnum(Role),
                 organizationId: z.string().uuid(),
+                userId: z.string(),
               }),
             }),
           },
@@ -31,8 +32,9 @@ export async function getMembership(app: FastifyInstance) {
       },
       async (request) => {
         const { slug } = request.params
+
         const {
-          membership: { id, role, organizationId },
+          membership: { id, role, organizationId, userId },
         } = await request.getUserMembership(slug)
 
         return {
@@ -40,6 +42,7 @@ export async function getMembership(app: FastifyInstance) {
             id,
             role,
             organizationId,
+            userId,
           },
         }
       }

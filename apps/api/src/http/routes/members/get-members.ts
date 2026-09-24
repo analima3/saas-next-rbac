@@ -73,11 +73,13 @@ export async function getMembers(app: FastifyInstance) {
           },
         })
 
-        const membersWithUsers = members.map(({ user, ...member }) => ({
-          ...member,
-          ...user,
-          userId: user.id,
-        }))
+        const membersWithUsers = members.map(
+          ({ user: { id: userId, ...user }, ...member }) => ({
+            ...member,
+            ...user,
+            userId,
+          })
+        )
 
         return reply.status(200).send({ members: membersWithUsers })
       }
