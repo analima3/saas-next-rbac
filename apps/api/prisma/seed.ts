@@ -2,8 +2,15 @@ import { faker } from '@faker-js/faker'
 import { hash } from 'bcryptjs'
 import { prisma } from '../src/lib/prisma'
 
+const ACME_ADMIN_ORGANIZATION_ID = '5808bd63-375c-4c2f-ae92-2b359e4e58d8'
+
 async function seed() {
+  await prisma.invite.deleteMany()
+  await prisma.project.deleteMany()
+  await prisma.member.deleteMany()
   await prisma.organization.deleteMany()
+  await prisma.token.deleteMany()
+  await prisma.account.deleteMany()
   await prisma.user.deleteMany()
 
   const passwordHash = await hash('123456', 1)
@@ -37,12 +44,34 @@ async function seed() {
 
   await prisma.organization.create({
     data: {
+      id: ACME_ADMIN_ORGANIZATION_ID,
       name: 'Acme Inc (Admin)',
       domain: 'acme.com',
       slug: 'acme-admin',
       avatarUrl: faker.image.avatarGitHub(),
       shouldAttachUsersByDomain: true,
       ownerId: user.id,
+      invites: {
+        createMany: {
+          data: [
+            {
+              email: 'jane.doe@acme.com',
+              role: 'ADMIN',
+              authorId: user.id,
+            },
+            {
+              email: 'alex@acme.com',
+              role: 'MEMBER',
+              authorId: user.id,
+            },
+            {
+              email: 'maria@acme.com',
+              role: 'BILLING',
+              authorId: user.id,
+            },
+          ],
+        },
+      },
       projects: {
         createMany: {
           data: [
@@ -236,6 +265,11 @@ async function seed() {
   })
 }
 
-seed().then(() => {
-  console.log('Database seeded!')
-})
+seed()
+  .then(() => {
+    console.log('Database seeded!')
+  })
+  .catch((error) => {
+    console.error('Failed to seed database:', error)
+    process.exit(1)
+  })
