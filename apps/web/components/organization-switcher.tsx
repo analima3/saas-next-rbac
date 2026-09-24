@@ -13,6 +13,7 @@ import { getOrganizations } from '@/dal/get-organizations'
 import Link from 'next/link'
 import { SwitchButton } from './switch-button'
 import { getCurrentOrganization } from '@/lib/get-current-organization'
+import { getUserInitialsByName } from '@/lib/get-initials-by-name'
 
 export async function OrganizationSwitcher() {
   const orgSlug = await getCurrentOrganization()
@@ -25,11 +26,14 @@ export async function OrganizationSwitcher() {
       <DropdownMenuTrigger className="focus-visible:ring-primary flex w-42 items-center gap-2 rounded p-1 text-sm font-medium outline-none focus-visible:ring-2">
         {currentOrganization ? (
           <>
-            <Avatar className="mr-1 size-4">
+            <Avatar className="mr-1 size-6">
               {currentOrganization.avatarUrl && (
                 <AvatarImage src={currentOrganization.avatarUrl} />
               )}
-              <AvatarFallback />
+
+              <AvatarFallback>
+                {getUserInitialsByName(currentOrganization.name)}
+              </AvatarFallback>
             </Avatar>
             <span className="truncate">{currentOrganization.name}</span>
           </>
@@ -53,9 +57,12 @@ export async function OrganizationSwitcher() {
                 nativeButton={false}
                 render={
                   <SwitchButton orgSlug={org.slug}>
-                    <Avatar className="mr-1 size-4">
+                    <Avatar className="mr-1 size-6">
                       {org.avatarUrl && <AvatarImage src={org.avatarUrl} />}
-                      <AvatarFallback />
+
+                      <AvatarFallback>
+                        {getUserInitialsByName(org.name)}
+                      </AvatarFallback>
                     </Avatar>
                     <span className="truncate">{org.name}</span>
                   </SwitchButton>

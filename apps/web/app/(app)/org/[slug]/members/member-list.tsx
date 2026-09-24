@@ -11,6 +11,7 @@ import { toInternalOrganization } from '@acl/auth'
 import { ArrowLeftRight, Crown, UserMinus } from 'lucide-react'
 import { removeMemberAction } from './actions'
 import { UpdateMemberRoleSelect } from './update-member-role-select'
+import { getUserInitialsByName } from '@/lib/get-initials-by-name'
 
 export async function MemberList() {
   const permissions = await ability()
@@ -48,7 +49,11 @@ export async function MemberList() {
                 <TableRow key={member.id}>
                   <TableCell className="py-2.5" style={{ width: 48 }}>
                     <Avatar>
-                      <AvatarFallback />
+                      {member.name && (
+                        <AvatarFallback>
+                          {getUserInitialsByName(member.name)}
+                        </AvatarFallback>
+                      )}
                       {member.avatarUrl && (
                         <AvatarImage src={member.avatarUrl} />
                       )}
@@ -56,30 +61,29 @@ export async function MemberList() {
                   </TableCell>
 
                   <TableCell className="py-2.5">
-                    <div>
-                      <span className="mr-2 font-medium">{member.name}</span>
-                      {member.userId === membership.userId && (
-                        <Badge
-                          variant="outline"
-                          className="border-purple-500 text-purple-500 dark:border-purple-500 dark:text-purple-500"
-                        >
-                          me
-                        </Badge>
-                      )}
+                    <span className="mr-2 font-medium">{member.name}</span>
+                    {member.userId === membership.userId && (
+                      <Badge
+                        variant="outline"
+                        className="border-purple-500 text-purple-500 dark:border-purple-500 dark:text-purple-500"
+                      >
+                        me
+                      </Badge>
+                    )}
 
-                      {member.userId === organization.ownerId && (
-                        <Badge
-                          variant="outline"
-                          className="border-purple-500 text-purple-500 dark:border-purple-500 dark:text-purple-500"
-                        >
-                          owner
-                          <Crown className="size-4" />
-                        </Badge>
-                      )}
-                    </div>
-                    <span className="text-sx text-muted-foreground">
+                    {member.userId === organization.ownerId && (
+                      <Badge
+                        variant="outline"
+                        className="ml-2 border-purple-500 text-purple-500 dark:border-purple-500 dark:text-purple-500"
+                      >
+                        owner
+                        <Crown className="size-4" />
+                      </Badge>
+                    )}
+
+                    <p className="text-sx text-muted-foreground">
                       {member.email}
-                    </span>
+                    </p>
                   </TableCell>
 
                   <TableCell className="py-2.5">

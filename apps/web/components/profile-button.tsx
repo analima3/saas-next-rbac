@@ -8,18 +8,7 @@ import {
 } from './ui/dropdown-menu'
 import { getUserProfile } from '@/dal/get-user-profile'
 import Link from 'next/link'
-
-function getUserInitials(name: string): string {
-  const names = name.trim().split(/\s+/)
-
-  if (!names[0]) return ''
-
-  return names
-    .slice(0, 2)
-    .map((n) => n[0])
-    .join('')
-    .toUpperCase()
-}
+import { getUserInitialsByName } from '@/lib/get-initials-by-name'
 
 export async function ProfileButton() {
   const user = await getUserProfile()
@@ -35,7 +24,7 @@ export async function ProfileButton() {
         <Avatar>
           {user.avatarUrl && <AvatarImage src={user.avatarUrl} />}
           {user.name && (
-            <AvatarFallback>{getUserInitials(user.name)}</AvatarFallback>
+            <AvatarFallback>{getUserInitialsByName(user.name)}</AvatarFallback>
           )}
         </Avatar>
 

@@ -17,7 +17,7 @@ export function SwitchButton({
       <Button
         type="submit"
         variant="ghost"
-        className="flex w-full justify-start pl-4"
+        className="flex w-full justify-start pl-1.5"
       >
         {children}
       </Button>

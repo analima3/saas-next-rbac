@@ -17,6 +17,7 @@ import { useParams } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { getProjects } from '@/dal/get-projects'
 import { Skeleton } from './ui/skeleton'
+import { getUserInitialsByName } from '@/lib/get-initials-by-name'
 
 export function ProjectSwitcher() {
   const { slug: orgSlug, project: projectSlug } = useParams<{
@@ -46,11 +47,14 @@ export function ProjectSwitcher() {
           <>
             {currentProject ? (
               <>
-                <Avatar className="mr-1 size-4">
+                <Avatar className="mr-1 size-6">
                   {currentProject.avatarUrl && (
                     <AvatarImage src={currentProject.avatarUrl} />
                   )}
-                  <AvatarFallback />
+
+                  <AvatarFallback>
+                    {getUserInitialsByName(currentProject.name)}
+                  </AvatarFallback>
                 </Avatar>
                 <span className="truncate">{currentProject.name}</span>
               </>
@@ -76,11 +80,14 @@ export function ProjectSwitcher() {
                 nativeButton={false}
                 render={
                   <SwitchButton orgSlug={orgSlug} projectSlug={project.slug}>
-                    <Avatar className="mr-1 size-4">
+                    <Avatar className="mr-1 size-6">
                       {project.avatarUrl && (
                         <AvatarImage src={project.avatarUrl} />
                       )}
-                      <AvatarFallback />
+
+                      <AvatarFallback>
+                        {getUserInitialsByName(project.name)}
+                      </AvatarFallback>
                     </Avatar>
                     <span className="truncate">{project.name}</span>
                   </SwitchButton>

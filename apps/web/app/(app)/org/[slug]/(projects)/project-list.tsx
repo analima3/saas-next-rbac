@@ -12,6 +12,7 @@ import { getCurrentOrganization } from '@/lib/get-current-organization'
 import { ArrowRight } from 'lucide-react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import { getUserInitialsByName } from '@/lib/get-initials-by-name'
 
 dayjs.extend(relativeTime)
 
@@ -35,11 +36,16 @@ export async function ProjectList() {
 
             <CardFooter className="flex flex-col items-end justify-between gap-6">
               <div className="flex items-center gap-2">
-                <Avatar className="size-4">
+                <Avatar className="size-6">
                   {project.owner.avatarUrl && (
                     <AvatarImage src={project.owner.avatarUrl} />
                   )}
-                  <AvatarFallback />
+
+                  {project.owner.name && (
+                    <AvatarFallback>
+                      {getUserInitialsByName(project.owner.name)}
+                    </AvatarFallback>
+                  )}
                 </Avatar>
 
                 <span className="text-muted-foreground text-xs">
