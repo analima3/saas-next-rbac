@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { createOrganization } from '@/dal/create-organization'
 import { getCurrentOrganization } from '@/lib/get-current-organization'
 import { updateOrganization } from '@/dal/update-organization'
-import { revalidateTag } from 'next/cache'
+import { updateTag } from 'next/cache'
 
 const organizationSchema = z
   .object({
@@ -70,7 +70,7 @@ export async function createOrganizationAction(data: FormData) {
       shouldAttachUsersByDomain,
     })
 
-    revalidateTag('organizations', 'max')
+    updateTag('organizations')
   } catch (error) {
     if (error instanceof HTTPError) {
       const { message } = await error.data
@@ -115,7 +115,7 @@ export async function updateOrganizationAction(data: FormData) {
       shouldAttachUsersByDomain,
     })
 
-    revalidateTag('organizations', 'max')
+    updateTag('organizations')
   } catch (error) {
     if (error instanceof HTTPError) {
       const { message } = await error.data
