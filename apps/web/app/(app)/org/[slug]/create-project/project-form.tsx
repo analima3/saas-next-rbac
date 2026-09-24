@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useFormState } from '@/hooks/use-form-state'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { AlertTriangle, Loader2 } from 'lucide-react'
+import { AlertTriangle, Check, Loader2 } from 'lucide-react'
 import { createProjectAction } from './actions'
 import { Textarea } from '@/components/ui/textarea'
 import { useParams } from 'next/navigation'
@@ -37,7 +37,7 @@ export default function ProjectForm() {
 
       {success === true && message && (
         <Alert variant="success">
-          <AlertTriangle className="size-4" />
+          <Check className="size-4" />
           <AlertTitle>Success!</AlertTitle>
           <AlertDescription>
             <p>{message}</p>

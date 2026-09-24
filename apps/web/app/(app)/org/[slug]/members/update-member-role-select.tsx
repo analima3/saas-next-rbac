@@ -34,7 +34,7 @@ export function UpdateMemberRoleSelect({
       }}
       {...props}
     >
-      <SelectTrigger className="h-8 w-32">
+      <SelectTrigger className="h-4 w-28">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

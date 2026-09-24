@@ -11,7 +11,7 @@ import {
   updateOrganizationAction,
 } from './actions'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { AlertTriangle, Loader2 } from 'lucide-react'
+import { AlertTriangle, Check, Loader2 } from 'lucide-react'
 
 interface OrganizationForm {
   isUpdating?: boolean
@@ -43,7 +43,7 @@ export default function OrganizationForm({
 
       {success === true && message && (
         <Alert variant="success">
-          <AlertTriangle className="size-4" />
+          <Check className="size-4" />
           <AlertTitle>Success!</AlertTitle>
           <AlertDescription>
             <p>{message}</p>

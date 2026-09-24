@@ -56,8 +56,8 @@ export async function MemberList() {
                   </TableCell>
 
                   <TableCell className="py-2.5">
-                    <div className="flex items-center gap-2">
-                      <p className="font-medium">{member.name}</p>
+                    <div>
+                      <span className="mr-2 font-medium">{member.name}</span>
                       {member.userId === membership.userId && (
                         <Badge
                           variant="outline"
@@ -77,9 +77,9 @@ export async function MemberList() {
                         </Badge>
                       )}
                     </div>
-                    <p className="text-sx text-muted-foreground">
+                    <span className="text-sx text-muted-foreground">
                       {member.email}
-                    </p>
+                    </span>
                   </TableCell>
 
                   <TableCell className="py-2.5">
