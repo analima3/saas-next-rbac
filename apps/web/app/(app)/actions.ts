@@ -1,6 +1,8 @@
 'use server'
 
-import { refresh, revalidatePath } from 'next/cache'
+import { acceptInvite } from '@/dal/accept-invite'
+import { rejectInvite } from '@/dal/reject-invite'
+import { refresh, updateTag } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 export async function redirectToPathAction(
@@ -13,4 +15,14 @@ export async function redirectToPathAction(
 
   refresh()
   redirect(path)
+}
+
+export async function acceptInviteAction(inviteId: string) {
+  await acceptInvite(inviteId)
+
+  updateTag('organizations')
+}
+
+export async function rejectInviteAction(inviteId: string) {
+  await rejectInvite(inviteId)
 }

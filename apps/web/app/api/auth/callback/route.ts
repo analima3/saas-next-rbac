@@ -1,3 +1,4 @@
+import { acceptInvite } from '@/dal/accept-invite'
 import { signInWithGithub } from '@/dal/sign-in-with-github'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
@@ -23,6 +24,16 @@ export async function GET(request: NextRequest) {
   cookieStore.set('token', token, {
     maxAge: 60 * 60 * 24 * 7, // 7 days
   })
+
+  const inviteId = cookieStore.get('inviteId')?.value
+
+  if (inviteId) {
+    try {
+      await acceptInvite(inviteId)
+
+      cookieStore.delete('inviteId')
+    } catch {}
+  }
 
   const redirectUrl = request.nextUrl.clone()
 

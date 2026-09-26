@@ -17,9 +17,6 @@ export async function getPendingInvites(app: FastifyInstance) {
           tags: ['Invites'],
           summary: 'Get all pending invites.',
           security: [{ bearerAuth: [] }],
-          params: z.object({
-            inviteId: z.string(),
-          }),
           response: {
             200: z.object({
               invites: z
