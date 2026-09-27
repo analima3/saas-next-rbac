@@ -3,8 +3,8 @@
   "type": "module",
   "version": "0.0.0",
   "scripts": {
-    "start": "node dist/http/server.js",
-    "dev": "pnpm env:load tsx watch src/http/server.js",
+    "start": "node dist/http/server.cjs",
+    "dev": "pnpm env:load tsx watch src/http/server.ts",
     "build": "tsup",
     "db:generate": "pnpm env:load prisma generate",
     "db:migrate": "pnpm env:load prisma migrate dev",
