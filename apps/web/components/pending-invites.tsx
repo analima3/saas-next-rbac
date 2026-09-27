@@ -70,10 +70,11 @@ export function PeddingInvites() {
                 </span>
               </p>
 
-              <div className="flex justify-end gap-1">
+              <div className="flex justify-end gap-2">
                 <Button
                   size="xs"
                   variant="outline"
+                  className="text-success border-success hover:text-success"
                   onClick={() => handleAcceptInvite(invite.id)}
                 >
                   <Check className="mr-1 size-3" />
@@ -84,6 +85,7 @@ export function PeddingInvites() {
                   onClick={() => handleRejectInvite(invite.id)}
                   size="xs"
                   variant="ghost"
+                  className="border-amber-500 text-amber-500 hover:text-amber-500 dark:border-amber-300 dark:text-amber-300 dark:hover:text-amber-300"
                 >
                   <X className="mr-1 size-3" />
                   Reject

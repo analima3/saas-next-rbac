@@ -9,7 +9,7 @@ import { ability } from '@/lib/ability'
 import { getCurrentOrganization } from '@/lib/get-current-organization'
 import { toInternalOrganization } from '@acl/auth'
 import { ArrowLeftRight, Crown, UserMinus } from 'lucide-react'
-import { removeMemberAction } from './actions'
+import { removeMemberAction, transferOwnershipAction } from './actions'
 import { UpdateMemberRoleSelect } from './update-member-role-select'
 import { getUserInitialsByName } from '@/lib/get-initials-by-name'
 
@@ -99,10 +99,17 @@ export async function MemberList() {
                       />
 
                       {canTranferOwnershipOrganization && (
-                        <Button size="xs" variant="ghost">
-                          <ArrowLeftRight className="mr-1 size-4" />
-                          Tranfer ownership
-                        </Button>
+                        <form
+                          action={transferOwnershipAction.bind(
+                            null,
+                            member.userId
+                          )}
+                        >
+                          <Button type="submit" size="xs" variant="ghost">
+                            <ArrowLeftRight className="mr-1 size-4" />
+                            Tranfer ownership
+                          </Button>
+                        </form>
                       )}
 
                       {canRemoverUser && (

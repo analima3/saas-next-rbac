@@ -3,6 +3,7 @@
 import { createInvite } from '@/dal/create-invite'
 import { removeMember } from '@/dal/remove-member'
 import { revokeInvite } from '@/dal/revoke-invite'
+import { transferOwnership } from '@/dal/transfer-ownership'
 import { updateMember } from '@/dal/update-member'
 import { getCurrentOrganization } from '@/lib/get-current-organization'
 import { Role } from '@acl/auth'
@@ -89,4 +90,12 @@ export async function updateMemberAction(memberId: string, role: Role) {
   })
 
   updateTag(`${currentOrg}/members`)
+}
+
+export async function transferOwnershipAction(newOwnerId: string) {
+  const currentOrg = await getCurrentOrganization()
+
+  await transferOwnership(newOwnerId, currentOrg!)
+
+  updateTag('organizations')
 }
