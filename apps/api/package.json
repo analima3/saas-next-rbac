@@ -3,7 +3,9 @@
   "type": "module",
   "version": "0.0.0",
   "scripts": {
+    "start": "node dist/http/server.js",
     "dev": "pnpm env:load tsx watch src/http/server.ts",
+    "build": "tsup",
     "db:generate": "pnpm env:load prisma generate",
     "db:migrate": "pnpm env:load prisma migrate dev",
     "db:studio": "pnpm env:load prisma studio",
@@ -36,6 +38,7 @@
     "@types/pg": "^8.23.1",
     "dotenv-cli": "^11.0.0",
     "prisma": "^7.10.0",
+    "tsup": "^8.5.1",
     "tsx": "^4.23.12"
   },
   "eslintConfig": {
